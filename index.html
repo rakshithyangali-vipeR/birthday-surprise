@@ -1,10 +1,184 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Birthday Surprise</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>For You 💌</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ffe6f2, #f0e6ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .container {
+    text-align: center;
+    max-width: 500px;
+  }
+
+  h1 {
+    color: #ff4da6;
+  }
+
+  button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    background: #ff66a3;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+
+  /* Envelope */
+  .envelope {
+    width: 200px;
+    height: 120px;
+    background: #ff99cc;
+    position: relative;
+    margin: 40px auto;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .flap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #ff66a3;
+    clip-path: polygon(0 0, 50% 50%, 100% 0);
+    top: 0;
+    transition: transform 0.6s;
+  }
+
+  .letter {
+    position: absolute;
+    width: 90%;
+    height: 140px;
+    background: white;
+    top: 20px;
+    left: 5%;
+    border-radius: 10px;
+    padding: 15px;
+    box-sizing: border-box;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s;
+    font-size: 14px;
+  }
+
+  .open .flap {
+    transform: rotateX(180deg);
+  }
+
+  .open .letter {
+    opacity: 1;
+    transform: translateY(-80px);
+  }
+
+  /* Hearts */
+  .heart {
+    position: absolute;
+    color: #ff4da6;
+    font-size: 20px;
+    animation: float 3s linear infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-200px); opacity: 0; }
+  }
+
+  #page2, #finalMessage {
+    display: none;
+  }
+
+  a {
+    display: block;
+    margin-top: 15px;
+    color: #ff3399;
+    text-decoration: none;
+    font-weight: bold;
+  }
+</style>
 </head>
+
 <body>
-  <h1>There is a special message waiting for you 💌</h1>
-  <button>Take me to the special message</button>
+
+<div class="container">
+
+  <!-- Page 1 -->
+  <div id="page1">
+    <h1>There is a special message waiting for you 💌</h1>
+    <button onclick="goToEnvelope()">Take me there</button>
+  </div>
+
+  <!-- Page 2 (Envelope) -->
+  <div id="page2">
+    <h1>Click the envelope ✉️</h1>
+
+    <div class="envelope" onclick="openEnvelope(this)">
+      <div class="flap"></div>
+      <div class="letter">
+        <p>Click again to read 💖</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final Message -->
+  <div id="finalMessage">
+    <h1>Happy Birthday ❤️</h1>
+    <p>
+      Replace this with your message.<br>
+      Write something meaningful here for her.
+    </p>
+
+    <a href="PASTE_SONG_LINK_HERE" target="_blank">
+      🎵 Play your song
+    </a>
+  </div>
+
+</div>
+
+<script>
+function goToEnvelope() {
+  document.getElementById("page1").style.display = "none";
+  document.getElementById("page2").style.display = "block";
+}
+
+function openEnvelope(el) {
+  if (!el.classList.contains("open")) {
+    el.classList.add("open");
+    createHearts();
+  } else {
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("finalMessage").style.display = "block";
+  }
+}
+
+function createHearts() {
+  for (let i = 0; i < 10; i++) {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = "❤️";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.top = "80%";
+    heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 3000);
+  }
+}
+</script>
+
 </body>
 </html>
